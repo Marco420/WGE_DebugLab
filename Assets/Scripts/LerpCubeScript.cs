@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class LerpCubeScript : MonoBehaviour {
 
-    public GameObject _cube;
-    public Vector3 _leftPosition;
-    public Vector3 _rightPosition;
+    public GameObject cube;
+    public Vector3 leftPosition;
+    public Vector3 rightPosition;
 
     public void StartLerp()
     {
-        _cube.transform.position = _leftPosition;
+        cube.transform.position = leftPosition;
         StartCoroutine(LerpCube());
     }
 
+    public void PrintDebugString()
+    {
+        Debug.Log(this.ToString());    
+     }
     IEnumerator LerpCube()
     {
         float t = 0;
@@ -22,13 +26,21 @@ public class LerpCubeScript : MonoBehaviour {
         {
             t += Time.deltaTime;
             Debug.Log(t);
-            _cube.transform.position = Vector3.Lerp(_leftPosition, _rightPosition, t);
+            cube.transform.position = Vector3.Lerp(leftPosition, rightPosition, t);
             if(t >=1)
             {
-                _cube.transform.position = _rightPosition;
+                cube.transform.position = rightPosition;
             }
             yield return null;
         }
+    }
+
+    public override string ToString()
+    {
+        string s;
+
+        s = (cube ? "Cube positon = " + cube.transform.position: "Cube not instantiated ") + "\n"+ "Left Position = " + leftPosition + "\n" + "Right Position = " + rightPosition;
+        return s;
     }
 
     //inseert code here:
